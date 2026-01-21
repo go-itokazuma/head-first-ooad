@@ -30,9 +30,8 @@ func main() {
 		fmt.Println("Sorry, Erin, we have nothing for you.")
 	}
 
-
 }
 
-func initializeInventory((inventory *Inventory) {
+func initializeInventory(inventory *Inventory) {
 	inventory.addGuitar("V95693", 1499.95, "Fender", "Stratocastor", "electric", "Alder", "Alder")
 }
