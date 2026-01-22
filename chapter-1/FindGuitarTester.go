@@ -19,7 +19,7 @@ func main() {
 	guitar := inventory.search(whatErinLikes)
 
 	if guitar != nil {
-		fmt.Println("Erin, you might like this %s %s %s guitar:\n   %s back and sides,\n   %s top.\nYou can have it for only $%f!\n",
+		fmt.Printf("Erin, you might like this %v %v %v guitar:\n%v back and sides,\n%v top.\nYou can have it for only $%.2f!\n",
 			guitar.getBuilder(),
 			guitar.getModel(),
 			guitar.getGuitarType(),
@@ -34,4 +34,5 @@ func main() {
 
 func initializeInventory(inventory *Inventory) {
 	inventory.addGuitar("V95693", 1499.95, "Fender", "Stratocastor", "electric", "Alder", "Alder")
+	//inventory.addGuitar("V9512", 1549.95, "fender", "stratocastor", "electric", "Alder", "Alder") //検索通るか確認用
 }
