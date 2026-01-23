@@ -20,7 +20,8 @@ func (i *Inventory) getGuitar(serialNumber string) *Guitar {
 	return nil
 }
 
-func (i *Inventory) search(searchGuitar *Guitar) *Guitar {
+func (i *Inventory) search(searchGuitar *Guitar) []*Guitar {
+	matchingGuitars := make([]*Guitar, 0)
 	for _, guitar := range i.guitars {
 		// シリアル番号は全て異なるので無視する
 		// 価格は全て異なるので無視する
@@ -40,7 +41,7 @@ func (i *Inventory) search(searchGuitar *Guitar) *Guitar {
 		if searchGuitar.getTopWood() != guitar.getTopWood() {
 			continue
 		}
-		return guitar
+		matchingGuitars = append(matchingGuitars, guitar)
 	}
-	return nil
+	return matchingGuitars
 }

@@ -8,22 +8,34 @@ func main() {
 	initializeInventory(&inventory)
 
 	whatErinLikes := NewGuitar("", 0, FENDER, "Stratocastor", ELECTRIC, ALDER, ALDER)
-	guitar := inventory.search(whatErinLikes)
+	matchingGuitars := inventory.search(whatErinLikes)
 
-	if guitar != nil {
-		fmt.Printf("Erin, you might like this %v %v %v guitar:\n%v back and sides,\n%v top.\nYou can have it for only $%.2f!\n",
-			guitar.getBuilder(),
-			guitar.getModel(),
-			guitar.getGuitarType(),
-			guitar.getBackWood(),
-			guitar.getTopWood(),
-			guitar.getPrice())
+	if len(matchingGuitars) > 0 {
+		fmt.Println("Erin, you might like these guitars:")
+		for _, guitar := range matchingGuitars {
+			fmt.Printf("  We have a %v %v %v guitar:\n     %v back and sides,\n     %v top.\n  You can have it for only $%.2f!\n  ----\n",
+				guitar.getBuilder(),
+				guitar.getModel(),
+				guitar.getGuitarType(),
+				guitar.getBackWood(),
+				guitar.getTopWood(),
+				guitar.getPrice())
+		}
 	} else {
 		fmt.Println("Sorry, Erin, we have nothing for you.")
 	}
 }
 
 func initializeInventory(inventory *Inventory) {
+	inventory.addGuitar("11277", 3999.95, COLLINGS, "CJ", ACOUSTIC, INDIAN_ROSEWOOD, SITKA)
 	inventory.addGuitar("V95693", 1499.95, FENDER, "Stratocastor", ELECTRIC, ALDER, ALDER)
-	// inventory.addGuitar("V9512", 1549.95, FENDER, "Stratocastor", ELECTRIC, ALDER, ALDER) // 検索通るか確認用
+	inventory.addGuitar("V9512", 1549.95, FENDER, "Stratocastor", ELECTRIC, ALDER, ALDER)
+	inventory.addGuitar("122784", 5495.95, MARTIN, "D-18", ACOUSTIC, MAHOGANY, ADIRONDACK)
+	inventory.addGuitar("76531", 6295.95, MARTIN, "OM-28", ACOUSTIC, BRAZILIAN_ROSEWOOD, ADIRONDACK)
+	inventory.addGuitar("70108276", 2295.95, GIBSON, "Les Paul", ELECTRIC, MAHOGANY, MAHOGANY)
+	inventory.addGuitar("82765501", 1890.95, GIBSON, "SG '61 Reissue", ELECTRIC, MAHOGANY, MAHOGANY)
+	inventory.addGuitar("77023", 6275.95, MARTIN, "D-28", ACOUSTIC, BRAZILIAN_ROSEWOOD, ADIRONDACK)
+	inventory.addGuitar("1092", 12995.95, OLSON, "SJ", ACOUSTIC, INDIAN_ROSEWOOD, CEDAR)
+	inventory.addGuitar("566-62", 8999.95, RYAN, "Cathedral", ACOUSTIC, COCOBOLO, CEDAR)
+	inventory.addGuitar("6 29584", 2100.95, PRS, "Dave Navarro Signature", ELECTRIC, MAHOGANY, MAPLE)
 }

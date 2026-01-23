@@ -28,8 +28,8 @@ func (i *Inventory) getGuitar(serialNumber string) *Guitar {
 
 func (i *Inventory) search(searchGuitar Guitar) *Guitar {
 	for _, guitar := range i.guitars {
-		//シリアル番号は全て異なるので無視する
-		//価格は全て異なるので無視する
+		// シリアル番号は全て異なるので無視する
+		// 価格は全て異なるので無視する
 		if searchGuitar.getBuilder() != "" && searchGuitar.getBuilder() != guitar.getBuilder() {
 			continue
 		}

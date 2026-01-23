@@ -2,13 +2,13 @@ package main
 
 // Guitar構造体
 type Guitar struct {
-	serialNumber string  //シリアル番号
-	price        float64 //価格
-	builder      string  //製造者
-	model        string  //モデル
-	guitarType   string  //種別(アコースティックまたはエレキ)　※「type」は予約語のため命名変更
-	backWood     string  //ギターに使用される木材
-	topWood      string  //ギターに使用される木材
+	serialNumber string  // シリアル番号
+	price        float64 // 価格
+	builder      string  // 製造者
+	model        string  // モデル
+	guitarType   string  // 種別(アコースティックまたはエレキ)　※「type」は予約語のため命名変更
+	backWood     string  // ギターに使用される木材
+	topWood      string  // ギターに使用される木材
 }
 
 func (g *Guitar) getSerialNumber() string {
