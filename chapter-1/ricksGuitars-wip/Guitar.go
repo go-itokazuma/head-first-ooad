@@ -7,11 +7,11 @@ type Guitar struct {
 	spec         *GuitarSpec // 製造者
 }
 
-func NewGuitar(serialNumber string, price float64, builder Builder, model string, guitarType Type, backWood Wood, topWood Wood) *Guitar {
+func NewGuitar(serialNumber string, price float64, spec *GuitarSpec) *Guitar {
 	return &Guitar{
 		serialNumber: serialNumber,
 		price:        price,
-		spec:         NewGuitarSpec(builder, model, guitarType, backWood, topWood),
+		spec:         spec,
 	}
 }
 
