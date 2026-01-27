@@ -1,15 +1,25 @@
 package main
 
-import "fmt"
+import (
+	"errors"
+	"fmt"
+)
 
 func main() {
 	// ギターの在庫を設定する
 	inventory := Inventory{}
 	err := initializeInventory(&inventory)
-	if err != nil {
-		fmt.Println("Error initializing inventory:", err)
+
+	if len(inventory.guitars) == 0 {
+		fmt.Println("Inventory is nil:", err)
 		return
 	}
+
+	if err != nil {
+		fmt.Println("Error initializing inventory:", err)
+		// return
+	}
+
 	// 検索するギターの仕様を設定する
 	whatErinLikes := NewGuitarSpec(FENDER, "Stratocastor", ELECTRIC, ALDER, ALDER, 12)
 	matchingGuitars := inventory.search(whatErinLikes)
@@ -34,19 +44,45 @@ func main() {
 
 func initializeInventory(inventory *Inventory) error { // 戻り値エラー追加
 
-	// 一括でエラーハンドリングできる書き方にしたい
-
-	err := inventory.addGuitar("11277", 3999.95, nil)
-	if err != nil {
-		return err
-	}
-	err = inventory.addGuitar("11277", 3999.95, NewGuitarSpec(COLLINGS, "CJ", ACOUSTIC, INDIAN_ROSEWOOD, SITKA, 6))
-	if err != nil {
-		return err
+	guitarsToAdd := []Guitar{
+		{serialNumber: "11277", price: 3999.95, spec: nil},
+		//{serialNumber: "V95693", price: 1499.95, spec: NewGuitarSpec(COLLINGS, "CJ", ACOUSTIC, INDIAN_ROSEWOOD, SITKA, 6)},
+		//{serialNumber: "V9512", price: 1549.95, spec: NewGuitarSpec(FENDER, "Stratocastor", ELECTRIC, ALDER, ALDER, 12)},
 	}
 
-	// 全てaddGuitarできたらnil返す
+	var inverrs error
+	var errCount int
+
+	for _, guitarToAdd := range guitarsToAdd {
+		err := inventory.addGuitar(guitarToAdd.serialNumber, guitarToAdd.price, guitarToAdd.spec)
+		if err != nil {
+			// fmt.Println("Error:", err) // デバッグ用
+			inverrs = errors.Join(inverrs, err)
+			errCount++
+			continue // 次のギター追加へ
+		}
+
+	}
+
+	if inverrs != nil {
+		return fmt.Errorf("%d件追加できませんでした: %w", errCount, inverrs)
+	}
 	return nil
+
+	/*
+		// 一括でエラーハンドリングできる書き方にしたい
+		err := inventory.addGuitar("11277", 3999.95, nil)
+		if err != nil {
+			return err
+		}
+		err = inventory.addGuitar("11277", 3999.95, NewGuitarSpec(COLLINGS, "CJ", ACOUSTIC, INDIAN_ROSEWOOD, SITKA, 6))
+		if err != nil {
+			return err
+		}
+		// 全てaddGuitarできたらnil返す
+		return nil
+	*/
+
 	/*
 		inventory.addGuitar("11277", 3999.95, NewGuitarSpec(COLLINGS, "CJ", ACOUSTIC, INDIAN_ROSEWOOD, SITKA, 6))
 		inventory.addGuitar("V95693", 1499.95, NewGuitarSpec(FENDER, "Stratocastor", ELECTRIC, ALDER, ALDER, 12))
