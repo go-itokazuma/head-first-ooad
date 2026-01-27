@@ -29,17 +29,25 @@ func main() {
 }
 
 func initializeInventory(inventory *Inventory) {
+	err := inventory.addGuitar("11277", 3999.95, nil)
+	if err != nil {
+		fmt.Println(err)
+	}
 	inventory.addGuitar("11277", 3999.95, NewGuitarSpec(COLLINGS, "CJ", ACOUSTIC, INDIAN_ROSEWOOD, SITKA, 6))
-	inventory.addGuitar("V95693", 1499.95, NewGuitarSpec(FENDER, "Stratocastor", ELECTRIC, ALDER, ALDER, 12))
-	inventory.addGuitar("V9512", 1549.95, NewGuitarSpec(FENDER, "Stratocastor", ELECTRIC, ALDER, ALDER, 12))
-	inventory.addGuitar("V95693", 1499.95, NewGuitarSpec(FENDER, "Stratocastor", ELECTRIC, ALDER, ALDER, 6))
-	inventory.addGuitar("V9512", 1668.95, NewGuitarSpec(FENDER, "Stratocastor", ELECTRIC, ALDER, ALDER, 12))
-	inventory.addGuitar("122784", 5495.95, NewGuitarSpec(MARTIN, "D-18", ACOUSTIC, MAHOGANY, ADIRONDACK, 6))
-	inventory.addGuitar("76531", 6295.95, NewGuitarSpec(MARTIN, "OM-28", ACOUSTIC, BRAZILIAN_ROSEWOOD, ADIRONDACK, 6))
-	inventory.addGuitar("70108276", 2295.95, NewGuitarSpec(GIBSON, "Les Paul", ELECTRIC, MAHOGANY, MAHOGANY, 6))
-	inventory.addGuitar("82765501", 1890.95, NewGuitarSpec(GIBSON, "SG '61 Reissue", ELECTRIC, MAHOGANY, MAHOGANY, 6))
-	inventory.addGuitar("77023", 6275.95, NewGuitarSpec(MARTIN, "D-28", ACOUSTIC, BRAZILIAN_ROSEWOOD, ADIRONDACK, 6))
-	inventory.addGuitar("1092", 12995.95, NewGuitarSpec(OLSON, "SJ", ACOUSTIC, INDIAN_ROSEWOOD, CEDAR, 6))
-	inventory.addGuitar("566-62", 8999.95, NewGuitarSpec(RYAN, "Cathedral", ACOUSTIC, COCOBOLO, CEDAR, 6))
-	inventory.addGuitar("6 29584", 2100.95, NewGuitarSpec(PRS, "Dave Navarro Signature", ELECTRIC, MAHOGANY, MAPLE, 6))
+
+	/*
+		inventory.addGuitar("11277", 3999.95, NewGuitarSpec(COLLINGS, "CJ", ACOUSTIC, INDIAN_ROSEWOOD, SITKA, 6))
+		inventory.addGuitar("V95693", 1499.95, NewGuitarSpec(FENDER, "Stratocastor", ELECTRIC, ALDER, ALDER, 12))
+		inventory.addGuitar("V9512", 1549.95, NewGuitarSpec(FENDER, "Stratocastor", ELECTRIC, ALDER, ALDER, 12))
+		inventory.addGuitar("V95693", 1499.95, NewGuitarSpec(FENDER, "Stratocastor", ELECTRIC, ALDER, ALDER, 6))
+		inventory.addGuitar("V9512", 1668.95, NewGuitarSpec(FENDER, "Stratocastor", ELECTRIC, ALDER, ALDER, 12))
+		inventory.addGuitar("122784", 5495.95, NewGuitarSpec(MARTIN, "D-18", ACOUSTIC, MAHOGANY, ADIRONDACK, 6))
+		inventory.addGuitar("76531", 6295.95, NewGuitarSpec(MARTIN, "OM-28", ACOUSTIC, BRAZILIAN_ROSEWOOD, ADIRONDACK, 6))
+		inventory.addGuitar("70108276", 2295.95, NewGuitarSpec(GIBSON, "Les Paul", ELECTRIC, MAHOGANY, MAHOGANY, 6))
+		inventory.addGuitar("82765501", 1890.95, NewGuitarSpec(GIBSON, "SG '61 Reissue", ELECTRIC, MAHOGANY, MAHOGANY, 6))
+		inventory.addGuitar("77023", 6275.95, NewGuitarSpec(MARTIN, "D-28", ACOUSTIC, BRAZILIAN_ROSEWOOD, ADIRONDACK, 6))
+		inventory.addGuitar("1092", 12995.95, NewGuitarSpec(OLSON, "SJ", ACOUSTIC, INDIAN_ROSEWOOD, CEDAR, 6))
+		inventory.addGuitar("566-62", 8999.95, NewGuitarSpec(RYAN, "Cathedral", ACOUSTIC, COCOBOLO, CEDAR, 6))
+		inventory.addGuitar("6 29584", 2100.95, NewGuitarSpec(PRS, "Dave Navarro Signature", ELECTRIC, MAHOGANY, MAPLE, 6))
+	*/
 }

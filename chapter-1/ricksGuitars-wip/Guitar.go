@@ -1,5 +1,9 @@
 package main
 
+import (
+	"errors"
+)
+
 // Guitar構造体
 type Guitar struct {
 	serialNumber string      // シリアル番号
@@ -7,12 +11,17 @@ type Guitar struct {
 	spec         *GuitarSpec // 製造者
 }
 
-func NewGuitar(serialNumber string, price float64, spec *GuitarSpec) *Guitar {
+func NewGuitar(serialNumber string, price float64, spec *GuitarSpec) (*Guitar, error) {
+	// fmt.Println(spec) //デバッグ用(遷移しているか確認)
+	if spec == nil {
+		return nil, errors.New("spec must not be nil")
+	}
+
 	return &Guitar{
 		serialNumber: serialNumber,
 		price:        price,
 		spec:         spec,
-	}
+	}, nil
 }
 
 func (g *Guitar) getSerialNumber() string {

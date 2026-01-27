@@ -3,7 +3,7 @@ package main
 type Builder int
 
 const (
-	Unspecified Builder = iota
+	Unspecified Builder = iota + 1
 	FENDER
 	MARTIN
 	GIBSON

@@ -3,7 +3,7 @@ package main
 type Wood int
 
 const (
-	INDIAN_ROSEWOOD Wood = iota
+	INDIAN_ROSEWOOD Wood = iota + 1
 	BRAZILIAN_ROSEWOOD
 	MAHOGANY
 	MAPLE

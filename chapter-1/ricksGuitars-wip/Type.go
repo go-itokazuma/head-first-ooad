@@ -3,7 +3,7 @@ package main
 type Type int
 
 const (
-	ACOUSTIC Type = iota
+	ACOUSTIC Type = iota + 1
 	ELECTRIC
 )
 
