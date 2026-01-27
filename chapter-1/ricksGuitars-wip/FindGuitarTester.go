@@ -46,8 +46,16 @@ func initializeInventory(inventory *Inventory) error { // 戻り値エラー追�
 
 	guitarsToAdd := []Guitar{
 		{serialNumber: "11277", price: 3999.95, spec: nil},
-		//{serialNumber: "V95693", price: 1499.95, spec: NewGuitarSpec(COLLINGS, "CJ", ACOUSTIC, INDIAN_ROSEWOOD, SITKA, 6)},
-		//{serialNumber: "V9512", price: 1549.95, spec: NewGuitarSpec(FENDER, "Stratocastor", ELECTRIC, ALDER, ALDER, 12)},
+		{serialNumber: "V95693", price: 1499.95, spec: NewGuitarSpec(COLLINGS, "CJ", ACOUSTIC, INDIAN_ROSEWOOD, SITKA, 6)},
+		{serialNumber: "V9512", price: 1549.95, spec: NewGuitarSpec(FENDER, "Stratocastor", ELECTRIC, ALDER, ALDER, 12)},
+		{serialNumber: "V9513", price: 1570.85, spec: NewGuitarSpec(FENDER, "Stratocastor", ELECTRIC, ALDER, ALDER, 12)},
+		{serialNumber: "122784", price: 5495.95, spec: NewGuitarSpec(MARTIN, "D-18", ACOUSTIC, MAHOGANY, ADIRONDACK, 6)},
+		{serialNumber: "76531", price: 6295.95, spec: NewGuitarSpec(MARTIN, "OM-28", ACOUSTIC, BRAZILIAN_ROSEWOOD, ADIRONDACK, 6)},
+		{serialNumber: "70108276", price: 2295.95, spec: NewGuitarSpec(GIBSON, "Les Paul", ELECTRIC, MAHOGANY, MAHOGANY, 6)},
+		{serialNumber: "82765501", price: 1890.95, spec: NewGuitarSpec(GIBSON, "SG '61 Reissue", ELECTRIC, MAHOGANY, MAHOGANY, 6)},
+		{serialNumber: "77023", price: 6275.95, spec: NewGuitarSpec(MARTIN, "D-28", ACOUSTIC, BRAZILIAN_ROSEWOOD, ADIRONDACK, 6)},
+		{serialNumber: "1092", price: 12995.95, spec: NewGuitarSpec(OLSON, "SJ", ACOUSTIC, INDIAN_ROSEWOOD, CEDAR, 6)},
+		{serialNumber: "566-62", price: 8999.95, spec: NewGuitarSpec(RYAN, "Cathedral", ACOUSTIC, COCOBOLO, CEDAR, 6)},
 	}
 
 	var inverrs error
