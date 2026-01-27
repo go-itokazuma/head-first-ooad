@@ -5,8 +5,12 @@ import "fmt"
 func main() {
 	// ギターの在庫を設定する
 	inventory := Inventory{}
-	initializeInventory(&inventory)
-
+	err := initializeInventory(&inventory)
+	if err != nil {
+		fmt.Println("Error initializing inventory:", err)
+		return
+	}
+	// 検索するギターの仕様を設定する
 	whatErinLikes := NewGuitarSpec(FENDER, "Stratocastor", ELECTRIC, ALDER, ALDER, 12)
 	matchingGuitars := inventory.search(whatErinLikes)
 
@@ -28,13 +32,21 @@ func main() {
 	}
 }
 
-func initializeInventory(inventory *Inventory) {
+func initializeInventory(inventory *Inventory) error { // 戻り値エラー追加
+
+	// 一括でエラーハンドリングできる書き方にしたい
+
 	err := inventory.addGuitar("11277", 3999.95, nil)
 	if err != nil {
-		fmt.Println(err)
+		return err
 	}
-	inventory.addGuitar("11277", 3999.95, NewGuitarSpec(COLLINGS, "CJ", ACOUSTIC, INDIAN_ROSEWOOD, SITKA, 6))
+	err = inventory.addGuitar("11277", 3999.95, NewGuitarSpec(COLLINGS, "CJ", ACOUSTIC, INDIAN_ROSEWOOD, SITKA, 6))
+	if err != nil {
+		return err
+	}
 
+	// 全てaddGuitarできたらnil返す
+	return nil
 	/*
 		inventory.addGuitar("11277", 3999.95, NewGuitarSpec(COLLINGS, "CJ", ACOUSTIC, INDIAN_ROSEWOOD, SITKA, 6))
 		inventory.addGuitar("V95693", 1499.95, NewGuitarSpec(FENDER, "Stratocastor", ELECTRIC, ALDER, ALDER, 12))
