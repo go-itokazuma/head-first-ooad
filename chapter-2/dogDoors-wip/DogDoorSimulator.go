@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"time"
+)
 
 func main() {
 	door := NewDogDoor()
@@ -10,11 +13,10 @@ func main() {
 	remote.PressButton()
 
 	fmt.Println("\nFidoが外に出る。。。")
-	remote.PressButton()
 
 	fmt.Println("\nFidoが用を済ます。。。")
-	remote.PressButton()
 
 	fmt.Println("\nFidoが家の中に戻る。。。")
-	remote.PressButton()
+	// ドアが閉まるのを待つ(5秒以上の待機)
+	time.Sleep(6 * time.Second)
 }

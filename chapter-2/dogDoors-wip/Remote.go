@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"time"
+)
 
 type Remote struct {
 	door *DogDoor
@@ -18,5 +21,8 @@ func (r *Remote) PressButton() {
 		r.door.Close()
 	} else {
 		r.door.Open()
+		time.AfterFunc(5*time.Second, func() {
+			r.door.Close()
+		})
 	}
 }
