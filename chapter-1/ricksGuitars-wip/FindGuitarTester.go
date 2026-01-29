@@ -1,17 +1,14 @@
 package main
 
 import (
-	"errors"
 	"fmt"
 )
 
 func main() {
 	inventory, err := initializeInventory()
 	if err != nil {
-		fmt.Println("Error initializing inventory:", err)
-		if inventory == nil {
-			return
-		}
+		fmt.Println("error initializing inventory:", err)
+		return
 	}
 
 	whatErinLikes := NewGuitarSpec(FENDER, "Stratocastor", ELECTRIC, ALDER, ALDER, 12)
@@ -39,6 +36,7 @@ func initializeInventory() (*Inventory, error) {
 	inventory := &Inventory{}
 	guitarsToAdd := []Guitar{
 		{serialNumber: "11277", price: 3999.95, spec: nil},
+		{serialNumber: "11278", price: 3509.85, spec: nil},
 		{serialNumber: "V95693", price: 1499.95, spec: NewGuitarSpec(COLLINGS, "CJ", ACOUSTIC, INDIAN_ROSEWOOD, SITKA, 6)},
 		{serialNumber: "V9512", price: 1549.95, spec: NewGuitarSpec(FENDER, "Stratocastor", ELECTRIC, ALDER, ALDER, 12)},
 		{serialNumber: "V9513", price: 1570.85, spec: NewGuitarSpec(FENDER, "Stratocastor", ELECTRIC, ALDER, ALDER, 12)},
@@ -51,21 +49,14 @@ func initializeInventory() (*Inventory, error) {
 		{serialNumber: "566-62", price: 8999.95, spec: NewGuitarSpec(RYAN, "Cathedral", ACOUSTIC, COCOBOLO, CEDAR, 6)},
 	}
 
-	var inverrs error
-	var errCount int
-
 	for _, guitarToAdd := range guitarsToAdd {
 		if err := inventory.addGuitar(guitarToAdd.serialNumber, guitarToAdd.price, guitarToAdd.spec); err != nil {
-			inverrs = errors.Join(inverrs, err)
-			errCount++
+			fmt.Println("warning: could not add guitar", guitarToAdd.serialNumber, ":", err)
 		}
 	}
-	if len(inventory.guitars) == 0 {
-		return nil, fmt.Errorf("Inventory is nil:")
-	}
 
-	if inverrs != nil {
-		return inventory, fmt.Errorf("%d件追加できませんでした: %w", errCount, inverrs)
+	if len(inventory.guitars) == 0 {
+		return nil, fmt.Errorf("inventory is nil")
 	}
 	return inventory, nil
 }
