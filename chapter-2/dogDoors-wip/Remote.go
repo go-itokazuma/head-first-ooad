@@ -15,7 +15,7 @@ func NewRemote(door *DogDoor) *Remote {
 	}
 }
 
-func (r *Remote) PressButton() {
+func (r *Remote) PressButton(done chan bool) {
 	fmt.Println("リモコンのボタンが押された。。。")
 	if r.door.IsOpen() {
 		r.door.Close()
@@ -23,6 +23,7 @@ func (r *Remote) PressButton() {
 		r.door.Open()
 		time.AfterFunc(5*time.Second, func() {
 			r.door.Close()
+			done <- true
 		})
 	}
 }
