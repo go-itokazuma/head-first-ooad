@@ -15,16 +15,16 @@ func NewRemote(door *DogDoor) *Remote {
 	}
 }
 
-func (r *Remote) PressButton(done chan bool) {
+func (r *Remote) PressButton(done chan<- struct{}) {
 	fmt.Println("リモコンのボタンが押された。。。")
 	if r.door.IsOpen() {
 		r.door.Close()
-		done <- true
+		done <- struct{}{}
 	} else {
 		r.door.Open()
 		time.AfterFunc(5*time.Second, func() {
 			r.door.Close()
-			done <- true
+			done <- struct{}{}
 		})
 	}
 }

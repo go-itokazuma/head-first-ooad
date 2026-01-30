@@ -8,7 +8,7 @@ import (
 func main() {
 	door := NewDogDoor()
 	remote := NewRemote(door)
-	done := make(chan bool)
+	done := make(chan struct{})
 
 	fmt.Println("Fidoが外に出たいと吠える。。。")
 	remote.PressButton(done)
