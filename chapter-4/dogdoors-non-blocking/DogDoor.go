@@ -2,14 +2,12 @@ package main
 
 import (
 	"fmt"
-	"sync"
 	"time"
 )
 
 type DogDoor struct {
 	open         bool
 	allowedBarks []*Bark
-	wg           sync.WaitGroup
 }
 
 func NewDogDoor() *DogDoor {
@@ -27,35 +25,21 @@ func (d *DogDoor) GetAllowedBarks() []*Bark {
 	return d.allowedBarks
 }
 
-func (d *DogDoor) Open() {
-	if d.open {
-		return
-	}
+func (d *DogDoor) Open(done chan<- struct{}) {
 	fmt.Println("犬用ドアが開く。")
 	d.open = true
 
-	d.wg.Add(1)
-	go func() {
-		defer d.wg.Done()
-		time.Sleep(5 * time.Second)
-		if d.IsOpen() {
-			d.Close()
-		}
-	}()
+	time.AfterFunc(5*time.Second, func() {
+		d.Close(done)
+	})
 }
 
-func (d *DogDoor) Close() {
-	if !d.open {
-		return
-	}
+func (d *DogDoor) Close(done chan<- struct{}) {
 	fmt.Println("犬用ドアが閉まる。")
 	d.open = false
+	done <- struct{}{}
 }
 
 func (d *DogDoor) IsOpen() bool {
 	return d.open
-}
-
-func (d *DogDoor) WaitUntilClosed() {
-	d.wg.Wait()
 }

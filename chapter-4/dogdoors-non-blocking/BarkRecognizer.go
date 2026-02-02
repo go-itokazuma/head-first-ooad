@@ -12,12 +12,12 @@ func NewBarkRecognizer(door *DogDoor) *BarkRecognizer {
 	}
 }
 
-func (br *BarkRecognizer) Recognize(bark *Bark) {
+func (br *BarkRecognizer) Recognize(bark *Bark, done chan<- struct{}) {
 	fmt.Printf("BarkRecognizer: 検知-> %s\n", bark.GetSound())
 	allowedBarks := br.door.GetAllowedBarks()
 	for _, allowedBark := range allowedBarks {
 		if allowedBark.Equals(bark) {
-			br.door.Open()
+			br.door.Open(done)
 			return
 		}
 	}
