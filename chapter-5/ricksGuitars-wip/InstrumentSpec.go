@@ -1,61 +1,37 @@
 package main
 
-import "strings"
-
 type InstrumentSpec struct {
-	builder        Builder
-	model          string
-	instrumentType Type
-	backWood       Wood
-	topWood        Wood
+	properties map[string]interface{}
 }
 
-func NewInstrumentSpec(builder Builder, model string, instrumentType Type, backWood Wood, topWood Wood) *InstrumentSpec {
-	return &InstrumentSpec{
-		builder:        builder,
-		model:          model,
-		instrumentType: instrumentType,
-		backWood:       backWood,
-		topWood:        topWood,
+func NewInstrumentSpec(properties map[string]interface{}) *InstrumentSpec {
+	if properties == nil {
+		return &InstrumentSpec{
+			properties: make(map[string]interface{}),
+		}
 	}
+	copiedProps := make(map[string]interface{})
+	for k, v := range properties {
+		copiedProps[k] = v
+	}
+	return &InstrumentSpec{
+		properties: copiedProps,
+	}
+}
+
+func (is *InstrumentSpec) GetProperty(propertyName string) interface{} {
+	return is.properties[propertyName]
+}
+
+func (is *InstrumentSpec) GetProperties() map[string]interface{} {
+	return is.properties
 }
 
 func (is *InstrumentSpec) Matches(otherSpec *InstrumentSpec) bool {
-	if is.getBuilder() != otherSpec.getBuilder() {
-		return false
-	}
-	model := strings.ToLower(is.getModel())
-	if model != "" && model != strings.ToLower(otherSpec.getModel()) {
-		return false
-	}
-	if is.getInstrumentType() != otherSpec.getInstrumentType() {
-		return false
-	}
-	if is.getBackWood() != otherSpec.getBackWood() {
-		return false
-	}
-	if is.getTopWood() != otherSpec.getTopWood() {
-		return false
+	for propertyName, otherValue := range otherSpec.GetProperties() {
+		if is.properties[propertyName] != otherValue {
+			return false
+		}
 	}
 	return true
-}
-
-func (is *InstrumentSpec) getBuilder() Builder {
-	return is.builder
-}
-
-func (is *InstrumentSpec) getModel() string {
-	return is.model
-}
-
-func (is *InstrumentSpec) getInstrumentType() Type {
-	return is.instrumentType
-}
-
-func (is *InstrumentSpec) getBackWood() Wood {
-	return is.backWood
-}
-
-func (is *InstrumentSpec) getTopWood() Wood {
-	return is.topWood
 }

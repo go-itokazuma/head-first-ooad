@@ -7,10 +7,10 @@ import (
 type Instrument struct {
 	serialNumber string
 	price        float64
-	spec         *InstrumentSpec
+	spec         interface{}
 }
 
-func NewInstrument(serialNumber string, price float64, spec *InstrumentSpec) (*Instrument, error) {
+func NewInstrument(serialNumber string, price float64, spec interface{}) (*Instrument, error) {
 	if spec == nil {
 		return nil, errors.New("spec must not be nil")
 	}
@@ -34,6 +34,6 @@ func (i *Instrument) setPrice(newPrice float64) {
 	i.price = newPrice
 }
 
-func (i *Instrument) getSpec() *InstrumentSpec {
+func (i *Instrument) getSpec() interface{} {
 	return i.spec
 }
