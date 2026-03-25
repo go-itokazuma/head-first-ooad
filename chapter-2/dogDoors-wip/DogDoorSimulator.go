@@ -1,20 +1,27 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"time"
+)
 
 func main() {
 	door := NewDogDoor()
 	remote := NewRemote(door)
+	done := make(chan struct{})
 
 	fmt.Println("Fidoが外に出たいと吠える。。。")
-	remote.PressButton()
+	remote.PressButton(done)
 
 	fmt.Println("\nFidoが外に出る。。。")
-	remote.PressButton()
-
 	fmt.Println("\nFidoが用を済ます。。。")
-	remote.PressButton()
 
+	time.Sleep(10 * time.Second)
+	fmt.Println("\n...しかし、まだ外にいる！")
+	fmt.Println("\nFidoが吠え始める...")
+	fmt.Println("\nそこでGinaがリモコンをつかむ。")
+	remote.PressButton(done)
 	fmt.Println("\nFidoが家の中に戻る。。。")
-	remote.PressButton()
+	<-done
+	<-done
 }
