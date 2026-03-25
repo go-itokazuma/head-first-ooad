@@ -1,0 +1,42 @@
+package main
+
+import (
+	"fmt"
+	"time"
+)
+
+func main() {
+	door := NewDogDoor()
+	door.AddAllowedBark(NewBark("ロー"))
+	door.AddAllowedBark(NewBark("ローーー"))
+	door.AddAllowedBark(NewBark("ラル"))
+	door.AddAllowedBark(NewBark("ウー"))
+	recognizer := NewBarkRecognizer(door)
+	remote := NewRemote(door)
+	_ = remote
+
+	// ハードウェアによる鳴き声検知をシミュレーションする
+	fmt.Println("Bruceが吠え出す")
+	recognizer.Recognize(NewBark("ロー"))
+
+	fmt.Println("\nBruceが外に出る。。。")
+
+	time.Sleep(10 * time.Second)
+	fmt.Println("\nBruceが用を済ます。。。")
+
+	fmt.Println("\n...しかし外に閉め出される！")
+
+	// ハードウェアによる鳴き声検知を再びシミュレーションする(Bruce以外の犬)
+	fmt.Println("\n小さな犬が吠え出す")
+	smallDogBark := NewBark("キャン")
+	recognizer.Recognize(smallDogBark)
+
+	time.Sleep(5 * time.Second)
+	fmt.Println("\nBruceが吠え出す")
+	recognizer.Recognize(NewBark("ローーー"))
+
+	fmt.Println("\nBruceが家の中に戻る。。。")
+
+	door.WaitUntilClosed()
+	fmt.Println("\nシミュレーション終了")
+}
