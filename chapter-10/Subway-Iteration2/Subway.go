@@ -6,50 +6,67 @@ import (
 )
 
 type Subway struct {
-	stations    []*Station
+	stations    map[int]*Station
 	connections []*Connection
+	network     map[int][]*Station
 }
 
 func NewSubway() *Subway {
 	return &Subway{
-		stations:    make([]*Station, 0),
+		stations:    make(map[int]*Station),
 		connections: make([]*Connection, 0),
+		network:     make(map[int][]*Station),
 	}
 }
 
 func (s *Subway) HasStation(stationName string) bool {
-	target := NewStation(stationName)
-	for _, station := range s.stations {
-		if station.Equals(target) {
-			return true
-		}
-	}
-	return false
+	return s.findStation(stationName) != nil
 }
 
 func (s *Subway) AddStation(stationName string) {
-	if !s.HasStation(stationName) {
-		station := NewStation(stationName)
-		s.stations = append(s.stations, station)
+	station := NewStation(stationName)
+	hash := station.HashCode()
+
+	if _, exists := s.stations[hash]; !exists {
+		s.stations[hash] = station
 	}
+}
+
+func (s *Subway) findStation(stationName string) *Station {
+	target := NewStation(stationName)
+	hash := target.HashCode()
+
+	station, exists := s.stations[hash]
+	if !exists {
+		return nil
+	}
+
+	if !station.Equals(target) {
+		return nil
+	}
+
+	return station
 }
 
 func (s *Subway) AddConnection(station1Name string, station2Name string, lineName string) {
 	if s.HasStation(station1Name) && s.HasStation(station2Name) {
-		station1 := NewStation(station1Name)
-		station2 := NewStation(station2Name)
+		station1 := s.findStation(station1Name)
+		station2 := s.findStation(station2Name)
 		connection := NewConnection(station1, station2, lineName)
 		s.connections = append(s.connections, connection)
 		reverseConnection := NewConnection(station2, station1, lineName)
 		s.connections = append(s.connections, reverseConnection)
+
+		s.addToNetwork(station1, station2)
+
 	} else {
 		panic(fmt.Sprintf("Invalid connection: [%s, %s, %s]", station1Name, station2Name, lineName))
 	}
 }
 
 func (s *Subway) HasConnection(station1Name string, station2Name string, lineName string) bool {
-	station1 := NewStation(station1Name)
-	station2 := NewStation(station2Name)
+	station1 := s.findStation(station1Name)
+	station2 := s.findStation(station2Name)
 	for _, connection := range s.connections {
 		if strings.EqualFold(connection.GetLineName(), lineName) {
 			if connection.GetStation1().Equals(station1) && connection.GetStation2().Equals(station2) {
@@ -58,6 +75,14 @@ func (s *Subway) HasConnection(station1Name string, station2Name string, lineNam
 		}
 	}
 	return false
+}
+
+func (s *Subway) addToNetwork(station1 *Station, station2 *Station) {
+	hash1 := station1.HashCode()
+	hash2 := station2.HashCode()
+
+	s.network[hash1] = append(s.network[hash1], station2)
+	s.network[hash2] = append(s.network[hash2], station1)
 }
 
 /*

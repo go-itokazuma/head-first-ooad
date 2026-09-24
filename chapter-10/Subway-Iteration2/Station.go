@@ -15,6 +15,8 @@ func NewStation(name string) *Station {
 func (s *Station) GetName() string {
 	return s.name
 }
+
+// EqualsがtrueになるStationは、同じHashCodeを返さなければならない。
 func (s *Station) Equals(other *Station) bool {
 	if other == nil {
 		return false
