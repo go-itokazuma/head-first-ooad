@@ -47,6 +47,24 @@ func testNetwork() bool {
 	return has1to2 && has2to1
 }
 
+func testFindRoute() bool {
+	subway := NewSubway()
+	subway.AddStation("Ajax急流")
+	subway.AddStation("HTML高地")
+	subway.AddStation("JSPジャンクション")
+
+	subway.AddConnection("Ajax急流", "HTML高地", "テスト線")
+	subway.AddConnection("HTML高地", "JSPジャンクション", "テスト線")
+
+	route := subway.FindRoute("Ajax急流", "JSPジャンクション")
+
+	if len(route) != 2 {
+		return false
+	}
+
+	return route[0].GetStation1().GetName() == "Ajax急流" && route[0].GetStation2().GetName() == "HTML高地" && route[0].GetLineName() == "テスト線" && route[1].GetStation1().GetName() == "HTML高地" && route[1].GetStation2().GetName() == "JSPジャンクション" && route[1].GetLineName() == "テスト線"
+}
+
 func main() {
 	loader := NewSubwayLoader()
 	objectville, err := loader.LoadFromFile("ObjectvilleSubway.txt")
@@ -98,4 +116,13 @@ func main() {
 		fmt.Println("...ネットワークのテストに失敗")
 		os.Exit(-1)
 	}
+
+	fmt.Println("\n経路探索のテスト...")
+	if testFindRoute() {
+		fmt.Println("...経路探索のテストに成功")
+	} else {
+		fmt.Println("...経路探索のテストに失敗")
+		os.Exit(-1)
+	}
+
 }

@@ -85,6 +85,26 @@ func (s *Subway) addToNetwork(station1 *Station, station2 *Station) {
 	s.network[hash2] = append(s.network[hash2], station1)
 }
 
+func (s *Subway) FindRoute(startName string, endName string) []*Connection {
+	start := s.findStation(startName)
+	end := s.findStation(endName)
+
+	if start == nil || end == nil {
+		fmt.Println("入力された駅は、この地下鉄には存在しません")
+		return nil
+	}
+	return nil
+}
+
+func (s *Subway) getConnection(station1 *Station, station2 *Station) *Connection {
+	for _, connection := range s.connections {
+		if connection.GetStation1().Equals(station1) && connection.GetStation2().Equals(station2) {
+			return connection
+		}
+	}
+	return nil
+}
+
 /*
 func main() {
 	subway := NewSubway()
