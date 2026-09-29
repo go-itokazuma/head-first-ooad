@@ -93,6 +93,41 @@ func (s *Subway) FindRoute(startName string, endName string) []*Connection {
 		fmt.Println("入力された駅は、この地下鉄には存在しません")
 		return nil
 	}
+
+	queue := []*Station{start}
+	visited := make(map[int]bool)
+	previous := make(map[int]*Station)
+
+	visited[start.HashCode()] = true
+
+	for len(queue) > 0 {
+		current := queue[0]
+		queue = queue[1:]
+		neighbors := s.network[current.HashCode()]
+		for _, neighbor := range neighbors {
+			if !visited[neighbor.HashCode()] {
+				visited[neighbor.HashCode()] = true
+				previous[neighbor.HashCode()] = current
+				if !neighbor.Equals(end) {
+					queue = append(queue, neighbor)
+				} else {
+					currentRouteStation := end
+					route := []*Connection{}
+					for currentRouteStation != nil && !currentRouteStation.Equals(start) {
+						prevStation := previous[currentRouteStation.HashCode()]
+						connection := s.getConnection(prevStation, currentRouteStation)
+						route = append(route, connection)
+						currentRouteStation = prevStation
+					}
+					for left, right := 0, len(route)-1; left < right; left, right = left+1, right-1 {
+						route[left], route[right] = route[right], route[left]
+					}
+					return route
+				}
+			}
+		}
+	}
+
 	return nil
 }
 

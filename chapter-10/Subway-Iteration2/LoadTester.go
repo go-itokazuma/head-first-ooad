@@ -66,6 +66,18 @@ func testFindRoute() bool {
 }
 
 func main() {
+	if len(os.Args) > 1 {
+		if len(os.Args) != 3 {
+			fmt.Fprintln(os.Stderr, "使用方法: SubwayTester [出発駅] [到着駅]")
+			os.Exit(2)
+		}
+		if err := runSubwayTester(os.Args[1], os.Args[2], os.Stdout); err != nil {
+			fmt.Fprintln(os.Stderr, err)
+			os.Exit(1)
+		}
+		return
+	}
+
 	loader := NewSubwayLoader()
 	objectville, err := loader.LoadFromFile("ObjectvilleSubway.txt")
 	if err != nil {
